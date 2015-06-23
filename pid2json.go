@@ -1,18 +1,31 @@
-package pid2json
+package main
+
+//package tubes
 
 import (
-	//	"encoding/json"
+	//"encoding/json"
 	"fmt"
 	"github.com/mitchellh/go-ps"
+	"reflect"
+	//"strings"
 )
 
 // print array of PIDs
 func tap() {
-	arrayofPIDs, _ := ps.Processes()
 
-	for _, PID := range arrayofPIDs {
-		fmt.Print(PID)
+	PIDs, _ := ps.Processes()
+
+	for _, PID := range PIDs {
+		fmt.Println(PID)
+		fmt.Println(reflect.TypeOf(PID))
 	}
+
 }
 
-func Nozzle() {}
+func Nozzle() {
+
+}
+
+func main() {
+	tap()
+}

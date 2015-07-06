@@ -15,8 +15,8 @@ import (
 func tap() {
 
 	PIDs, _ := ps.Processes()
-	fmt.Println(reflect.TypeOf(PIDs))
-	fmt.Println(PIDs)
+	//fmt.Println(reflect.TypeOf(PIDs))
+	//fmt.Println(PIDs)
 
 	aPID := PIDs[0]
 	fmt.Println(reflect.TypeOf(&aPID))

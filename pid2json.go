@@ -30,7 +30,7 @@ func tap() {
 		fmt.Println(reflect.TypeOf(m))
 		b, _ := json.Marshal(m)
 		fmt.Println(reflect.TypeOf(b))
-		//fmt.Println(b)
+		fmt.Println(reflect.TypeOf(b[0]))
 	}
 }
 

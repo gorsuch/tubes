@@ -3,36 +3,34 @@ package main
 //package tubes
 
 import (
-	//"encoding/json"
+	"encoding/json"
 	"fmt"
 	"github.com/mitchellh/go-ps"
 	"reflect"
-	"strconv"
+	//"strconv"
 	//"strings"
 )
+
+type PidValues struct {
+	Pid  int
+	PPid int
+	Exec string
+}
 
 // print array of PIDs
 func tap() {
 
 	PIDs, _ := ps.Processes()
-	//fmt.Println(reflect.TypeOf(PIDs))
-	//fmt.Println(PIDs)
 
-	aPID := PIDs[0]
-	fmt.Println(reflect.TypeOf(&aPID))
-	fmt.Println(aPID.Pid())
-	b := aPID.Pid()
-	fmt.Println(reflect.TypeOf(b))
-
-	b_string := strconv.Itoa(b)
-	fmt.Println(b_string)
-	fmt.Println(reflect.TypeOf(b_string))
-
-	//	for _, PID := range PIDs {
-	//		fmt.Println(PID)
-	//		fmt.Println(reflect.TypeOf(PID))
-	//	}
-
+	// PIDs is now type []ps.Process
+	// Convert to JSON
+	for _, element := range PIDs {
+		m := PidValues{Pid: element.Pid(), PPid: element.PPid(), Exec: element.Executable()}
+		fmt.Println(m)
+		b, _ := json.Marshal(m)
+		fmt.Println(reflect.TypeOf(b))
+		//fmt.Println(b)
+	}
 }
 
 func Nozzle() {

@@ -27,6 +27,7 @@ func tap() {
 	for _, element := range PIDs {
 		m := PidValues{Pid: element.Pid(), PPid: element.PPid(), Exec: element.Executable()}
 		fmt.Println(m)
+		fmt.Println(reflect.TypeOf(m))
 		b, _ := json.Marshal(m)
 		fmt.Println(reflect.TypeOf(b))
 		//fmt.Println(b)

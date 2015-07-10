@@ -19,15 +19,15 @@ type PidValues struct {
 
 var b []byte
 
-// print array of PIDsnapshot
+// print array of Pidsnapshot
 func tap() {
 
-	PIDsnapshot, _ := ps.Processes()
+	Pidsnapshot, _ := ps.Processes()
 
-	// PIDsnapshot is now type []ps.Process
+	// Pidsnapshot is now type []ps.Process
 	// Convert to JSON
 
-	for _, element := range PIDsnapshot {
+	for _, element := range Pidsnapshot {
 		m := PidValues{Pid: element.Pid(), PPid: element.PPid(), Exec: element.Executable()}
 		b, _ = json.Marshal(m)
 	}

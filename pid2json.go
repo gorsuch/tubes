@@ -5,8 +5,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/mitchellh/go-ps"
 	"reflect"
+
+	"github.com/mitchellh/go-ps"
 	//"strconv"
 	//"strings"
 )
@@ -29,6 +30,7 @@ func tap() {
 		fmt.Println(m)
 		fmt.Println(reflect.TypeOf(m))
 		b, _ := json.Marshal(m)
+		fmt.Println(string(b))
 		fmt.Println(reflect.TypeOf(b))
 		fmt.Println(reflect.TypeOf(b[0]))
 	}

@@ -17,18 +17,22 @@ type PidValues struct {
 	Exec string
 }
 
-// print array of PIDs
+var b []byte
+
+// print array of PIDsnapshot
 func tap() {
 
-	PIDs, _ := ps.Processes()
+	PIDsnapshot, _ := ps.Processes()
 
-	// PIDs is now type []ps.Process
+	// PIDsnapshot is now type []ps.Process
 	// Convert to JSON
-	for _, element := range PIDs {
+
+	for _, element := range PIDsnapshot {
 		m := PidValues{Pid: element.Pid(), PPid: element.PPid(), Exec: element.Executable()}
-		b, _ := json.Marshal(m)
-		fmt.Println(string(b))
+		b, _ = json.Marshal(m)
 	}
+
+	fmt.Println(string(b))
 }
 
 func Nozzle() {

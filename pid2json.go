@@ -5,6 +5,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 	//	"reflect"
 
 	"github.com/mitchellh/go-ps"
@@ -12,35 +13,39 @@ import (
 	//"strings"
 )
 
-type PidValues struct {
+type PsValues struct {
 	Pid  int
 	PPid int
 	Exec string
 }
 
-var b []byte
-var a []string
+var PsMarshaled []byte
+var PsJson []string
 
-// print array of Pidsnapshot
+// take []ps.Process and format it into a slice of JSON values
 func tap() {
 
-	Pidsnapshot, _ := ps.Processes()
+	PsSnapshot, _ := ps.Processes()
 
-	// Pidsnapshot is now type []ps.Process
+	// PsSnapshot is now type []ps.Process
 	// Convert to slice of JSON formatted elements
 
-	for _, element := range Pidsnapshot {
-		m := PidValues{Pid: element.Pid(), PPid: element.PPid(), Exec: element.Executable()}
-		b, _ = json.Marshal(m)
-		a = append(a, string(b))
+	for _, element := range PsSnapshot {
+		PsMap := PsValues{Pid: element.Pid(), PPid: element.PPid(), Exec: element.Executable()}
+		PsMarshaled, _ = json.Marshal(PsMap)
+		PsJson = append(PsJson, string(PsMarshaled))
 	}
-	fmt.Println(a)
+	//fmt.Println(PsJson)
 }
 
-func Nozzle() {
-
+func Nozzle(w http.ResponseWriter, r *http.Request) {
+	for _, s := range PsJson {
+		fmt.Fprintf(w, string(s))
+	}
 }
 
 func main() {
 	tap()
+	http.HandleFunc("/", Nozzle)
+	http.ListenAndServe(":8080", nil)
 }

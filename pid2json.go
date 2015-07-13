@@ -38,6 +38,7 @@ func tap() {
 	//fmt.Println(PsJson)
 }
 
+// Nozzle sprays out some JSON
 func Nozzle(w http.ResponseWriter, r *http.Request) {
 	for _, s := range PsJson {
 		fmt.Fprintf(w, string(s))

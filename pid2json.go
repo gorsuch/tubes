@@ -45,7 +45,12 @@ func Nozzle(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// populate PsJson
 	tap()
+
+	// let's run Nozzle() when folks hit webserver
 	http.HandleFunc("/", Nozzle)
+
+	// start webserver
 	http.ListenAndServe(":8080", nil)
 }

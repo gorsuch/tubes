@@ -14,9 +14,9 @@ import (
 )
 
 type PsValues struct {
-	Pid  int
-	PPid int
-	Exec string
+	Pid  int    `json:"pid"`
+	PPid int    `json:"ppid"`
+	Exec string `json:"exec"`
 }
 
 var PsMarshaled []byte
@@ -49,7 +49,7 @@ func main() {
 	// populate PsJson
 	tap()
 
-	// let's run Nozzle() when folks hit webserver
+	// let's run Nozzle() when folks hit webserver root
 	http.HandleFunc("/", Nozzle)
 
 	// start webserver

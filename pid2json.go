@@ -9,8 +9,6 @@ import (
 	//	"reflect"
 
 	"github.com/mitchellh/go-ps"
-	//"strconv"
-	//"strings"
 )
 
 type PsValues struct {
@@ -35,7 +33,6 @@ func tap() {
 		PsMarshaled, _ = json.Marshal(PsMap)
 		PsJson = append(PsJson, string(PsMarshaled))
 	}
-	//fmt.Println(PsJson)
 }
 
 // Nozzle sprays out some JSON

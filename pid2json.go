@@ -11,11 +11,13 @@ import (
 	"github.com/mitchellh/go-ps"
 )
 
-type PsValues struct {
+type PsData struct {
 	Pid  int    `json:"pid"`
 	PPid int    `json:"ppid"`
 	Exec string `json:"exec"`
 }
+
+type PsMap []PsData
 
 var PsMarshaled []byte
 var PsJson []string
@@ -26,10 +28,15 @@ func tap() {
 	PsSnapshot, _ := ps.Processes()
 
 	// PsSnapshot is now type []ps.Process
-	// Convert to slice of JSON formatted elements
+	// Convert to slice of JSON formatted es
+	// using our PsData struct
 
-	for _, element := range PsSnapshot {
-		PsMap := PsValues{Pid: element.Pid(), PPid: element.PPid(), Exec: element.Executable()}
+	for _, e := range PsSnapshot {
+		PsMap := PsData{
+			Pid:  e.Pid(),
+			PPid: e.PPid(),
+			Exec: e.Executable(),
+		}
 		PsMarshaled, _ = json.Marshal(PsMap)
 		PsJson = append(PsJson, string(PsMarshaled))
 	}

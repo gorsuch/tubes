@@ -4,7 +4,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	//"fmt"
 	"net/http"
 	//	"reflect"
 
@@ -32,21 +32,19 @@ func tap() {
 	// using our PsData struct
 
 	for _, e := range PsSnapshot {
-		PsMap := PsData{
+		PsMarshaled, _ := json.Marshal(PsData{
 			Pid:  e.Pid(),
 			PPid: e.PPid(),
 			Exec: e.Executable(),
-		}
-		PsMarshaled, _ = json.Marshal(PsMap)
+		})
+
 		PsJson = append(PsJson, string(PsMarshaled))
 	}
 }
 
 // Nozzle sprays out some JSON
 func Nozzle(w http.ResponseWriter, r *http.Request) {
-	for _, s := range PsJson {
-		fmt.Fprintf(w, string(s))
-	}
+	json.NewEncoder(w).Encode(PsJson)
 }
 
 func main() {

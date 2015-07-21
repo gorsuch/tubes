@@ -17,8 +17,6 @@ type PsData struct {
 	Exec string `json:"exec"`
 }
 
-type PsMap []PsData
-
 var PsMarshaled []byte
 var PsJson []string
 

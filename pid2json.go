@@ -18,7 +18,7 @@ type PsData struct {
 }
 
 var PsMarshaled []byte
-var PsJson []string
+var PsCollection []PsData
 
 // take []ps.Process and format it into a slice of JSON values
 func tap() {
@@ -30,23 +30,22 @@ func tap() {
 	// using our PsData struct
 
 	for _, e := range PsSnapshot {
-		PsMarshaled, _ := json.Marshal(PsData{
+		data := PsData{
 			Pid:  e.Pid(),
 			PPid: e.PPid(),
 			Exec: e.Executable(),
-		})
-
-		PsJson = append(PsJson, string(PsMarshaled))
+		}
+		PsCollection = append(PsCollection, data)
 	}
 }
 
 // Nozzle sprays out some JSON
 func Nozzle(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(PsJson)
+	json.NewEncoder(w).Encode(PsCollection)
 }
 
 func main() {
-	// populate PsJson
+	// populate PsCollection
 	tap()
 
 	// let's run Nozzle() when folks hit webserver root
